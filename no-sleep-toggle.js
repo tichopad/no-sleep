@@ -5,7 +5,7 @@ import * as QuickSettings from "resource:///org/gnome/shell/ui/quickSettings.js"
 import { InhibitorManager } from "./inhibitor-manager.js";
 
 /** Menu toggle button. */
-class _NoSleepToggle extends QuickSettings.QuickMenuToggle {
+class _NoSleepToggle extends QuickSettings.QuickToggle {
 	/** Init toggle UI. */
 	_init() {
 		super._init({
