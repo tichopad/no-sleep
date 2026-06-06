@@ -2,12 +2,14 @@
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import * as QuickSettings from "resource:///org/gnome/shell/ui/quickSettings.js";
-import { ICONS } from "./config.js";
+import { ICONS, STATE_KEY_NAME } from "./config.js";
 
 /** Top panel icon. */
 class _NoSleepIndicator extends QuickSettings.SystemIndicator {
 	/** @type {ReturnType<typeof this._addIndicator> | null} */
 	#indicator = null;
+	/** @type {Gio.Settings | null} */
+	#settings = null;
 
 	/** Init indicator. */
 	_init() {
@@ -23,13 +25,10 @@ class _NoSleepIndicator extends QuickSettings.SystemIndicator {
 		this.#indicator.icon_name = ICONS.on.name;
 		this.#indicator.visible = false;
 
-		/** @type {Gio.Settings} */
-		this._settings = settings;
-		this._settings.bind(
-			"no-sleep-enabled",
-			/** @type {Parameters<Gio.Settings['bind']>[1]} */ (
-				/** @type {unknown} */ (this.#indicator)
-			),
+		this.#settings = settings;
+		this.#settings.bind(
+			STATE_KEY_NAME,
+			/** @type {any} Note: @girs/* type cross-compat mess */ (this.#indicator),
 			"visible",
 			Gio.SettingsBindFlags.DEFAULT,
 		);

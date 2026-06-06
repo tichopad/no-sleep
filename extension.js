@@ -1,6 +1,7 @@
 // @ts-check
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
+import { STATE_KEY_NAME } from "./config.js";
 import { InhibitorManager } from "./inhibitor-manager.js";
 import { NoSleepIndicator } from "./no-sleep-indicator.js";
 import { NoSleepToggle } from "./no-sleep-toggle.js";
@@ -19,7 +20,7 @@ export default class NoSleepExtension extends Extension {
 	/** Start extension. */
 	enable() {
 		this.#settings = this.getSettings();
-		this.#settings.set_boolean("no-sleep-enabled", false);
+		this.#settings.set_boolean(STATE_KEY_NAME, false);
 
 		this.#inhibitorManager = new InhibitorManager();
 		this.#indicator = new NoSleepIndicator();

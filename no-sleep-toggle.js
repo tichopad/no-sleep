@@ -3,7 +3,7 @@ import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as QuickSettings from "resource:///org/gnome/shell/ui/quickSettings.js";
-import { ICONS } from "./config.js";
+import { EXTENSION_NAME, ICONS, STATE_KEY_NAME } from "./config.js";
 import { InhibitorManager } from "./inhibitor-manager.js";
 
 /** Menu toggle button. */
@@ -16,8 +16,8 @@ class _NoSleepToggle extends QuickSettings.QuickToggle {
 	/** Init toggle UI. */
 	_init() {
 		super._init({
-			title: "No Sleep",
-			iconName: "face-yarn-symbolic",
+			title: EXTENSION_NAME,
+			iconName: ICONS.off.name,
 			toggleMode: true,
 		});
 	}
@@ -32,7 +32,7 @@ class _NoSleepToggle extends QuickSettings.QuickToggle {
 		this.#inhibitorManager = inhibitorManager;
 
 		this.#settings.bind(
-			"no-sleep-enabled",
+			STATE_KEY_NAME,
 			/** @type {Parameters<Gio.Settings['bind']>[1]} */ (
 				/** @type {unknown} */ (this)
 			),
@@ -63,23 +63,13 @@ class _NoSleepToggle extends QuickSettings.QuickToggle {
 	 * Display notification based on state
 	 */
 	#showNotification() {
-		const checkedStateToNotification = new Map([
-			[true, { iconName: ICONS.on.name, text: "No Sleep enabled" }],
-			[false, { iconName: ICONS.off.name, text: "No Sleep disabled" }],
-		]);
-
-		const notification = checkedStateToNotification.get(this.checked);
-		if (notification === undefined) {
-			logError(
-				`Expected boolean state, received: ${String(typeof this.checked)}`,
-			);
-			return;
-		}
+		const iconName = ICONS[this.checked ? "on" : "off"].name;
+		const text = `${EXTENSION_NAME} ${this.checked ? "enabled" : "disabled"}`;
 
 		Main.osdWindowManager.show(
 			-1,
-			Gio.Icon.new_for_string(notification.iconName),
-			notification.text,
+			Gio.Icon.new_for_string(iconName),
+			text,
 			null,
 		);
 	}

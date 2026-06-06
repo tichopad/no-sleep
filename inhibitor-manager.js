@@ -2,6 +2,7 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import GObject from "gi://GObject";
+import { EXTENSION_NAME } from "./config.js";
 
 /** Handle sleep block via DBus. */
 class _InhibitorManager extends GObject.Object {
@@ -21,7 +22,7 @@ class _InhibitorManager extends GObject.Object {
 			/** @type {any} Note: @girs/gjs and @girs/gnome-shell is a type cross-compat hell */
 			const glibVariant = GLib.Variant.new("(ssss)", [
 				"handle-lid-switch",
-				"No Sleep Extension",
+				`${EXTENSION_NAME} Extension`,
 				"Prevent sleep when lid closed",
 				"block",
 			]);
