@@ -9,6 +9,7 @@ export default class NoSleepExtension extends Extension {
 	/** Start extension. */
 	enable() {
 		this._settings = this.getSettings();
+		this._settings.set_boolean("no-sleep-enabled", false);
 
 		this._inhibitorManager = new InhibitorManager();
 		this._indicator = new NoSleepIndicator();
