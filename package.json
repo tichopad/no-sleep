@@ -1,0 +1,22 @@
+{
+	"name": "no-sleep",
+	"author": {
+		"name": "tichopad"
+	},
+	"repository": {
+		"url": "https://github.com/tichopad/no-sleep"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.16",
+		"@girs/gjs": "4.0.4",
+		"@girs/gnome-shell": "46.0.2",
+		"typescript": "6.0.3"
+	},
+	"scripts": {
+		"build:schemas": "glib-compile-schemas schemas/",
+		"typecheck": "tsc --noEmit -p ./jsconfig.json",
+		"format": "biome format --write .",
+		"lint": "biome lint .",
+		"check": "biome check --write ."
+	}
+}
