@@ -1,2 +1,0 @@
-- [x] Extension appears in `gnome-extensions list` after symlink
-- [x] `gnome-extensions info i-cant-get-no-sleep@tichopad` shows correct name and description

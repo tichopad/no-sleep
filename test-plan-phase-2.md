@@ -1,4 +1,0 @@
-- [x] `glib-compile-schemas schemas/` runs without errors
-- [x] `gschemas.compiled` file exists in `schemas/`
-- [ ] `gsettings get org.gnome.shell.extensions.no-sleep no-sleep-enabled` returns `false` (after install)
-- [ ] `gsettings set org.gnome.shell.extensions.no-sleep no-sleep-enabled true` works without error
