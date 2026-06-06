@@ -1,0 +1,8 @@
+{
+    "uuid": "i-cant-get-no-sleep@tichopad",
+    "name": "No Sleep",
+    "description": "Toggle to prevent sleep when laptop lid is closed",
+    "shell-version": ["45", "46"],
+    "settings-schema": "org.gnome.shell.extensions.no-sleep",
+    "version": 1
+}
