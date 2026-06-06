@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.no-sleep"
+          path="/org/gnome/shell/extensions/no-sleep/">
+    <key name="no-sleep-enabled" type="b">
+      <default>false</default>
+      <summary>No Sleep enabled state</summary>
+      <description>Whether No Sleep is currently active</description>
+    </key>
+  </schema>
+</schemalist>

@@ -42,7 +42,7 @@ no-sleep/
 
 ---
 
-### Step 2: GSettings Schema (schemas/org.gnome.shell.extensions.no-sleep.gschema.xml)
+### Step 2: GSettings Schema (schemas/org.gnome.shell.extensions.no-sleep.gschema.xml) ✅
 **Purpose:** Persist toggle state across sessions.
 
 **Schema structure:**
