@@ -5,35 +5,36 @@ import GObject from "gi://GObject";
 
 /** Handle sleep block via DBus. */
 class _InhibitorManager extends GObject.Object {
+	/** @type {Gio.UnixInputStream | undefined | null} */
+	#inhibitorFd = null;
+
 	/** Init fd state. */
 	_init() {
 		super._init();
-		this._inhibitorFd = null;
 	}
 
 	/** Block sleep. */
 	inhibit() {
-		if (this._inhibitorFd !== null) return;
+		if (this.#inhibitorFd !== null) return;
 
 		try {
+			/** @type {any} Note: @girs/gjs and @girs/gnome-shell is a type cross-compat hell */
+			const glibVariant = GLib.Variant.new("(ssss)", [
+				"handle-lid-switch",
+				"No Sleep Extension",
+				"Prevent sleep when lid closed",
+				"block",
+			]);
+			/** @type {any} Note: see above */
+			const variantType = new GLib.VariantType("(h)");
+
 			const [result, fdList] = Gio.DBus.system.call_with_unix_fd_list_sync(
 				"org.freedesktop.login1",
 				"/org/freedesktop/login1",
 				"org.freedesktop.login1.Manager",
 				"Inhibit",
-				/** @type {Parameters<typeof Gio.DBus.system.call_with_unix_fd_list_sync>[4]} */ (
-					/** @type {unknown} */ (
-						GLib.Variant.new("(ssss)", [
-							"handle-lid-switch",
-							"No Sleep Extension",
-							"Prevent sleep when lid closed",
-							"block",
-						])
-					)
-				),
-				/** @type {Parameters<typeof Gio.DBus.system.call_with_unix_fd_list_sync>[5]} */ (
-					/** @type {unknown} */ (new GLib.VariantType("(h)"))
-				),
+				glibVariant,
+				variantType,
 				Gio.DBusCallFlags.NONE,
 				-1,
 				null,
@@ -43,7 +44,8 @@ class _InhibitorManager extends GObject.Object {
 			/** @type {number} */
 			const fdIndex = result.deepUnpack()[0];
 			const fd = fdList?.get(fdIndex);
-			this._inhibitorFd = new Gio.UnixInputStream({
+
+			this.#inhibitorFd = new Gio.UnixInputStream({
 				fd,
 				close_fd: true,
 			});
@@ -54,11 +56,11 @@ class _InhibitorManager extends GObject.Object {
 
 	/** Allow sleep. */
 	uninhibit() {
-		if (this._inhibitorFd === null) return;
+		if (this.#inhibitorFd === null) return;
 
 		try {
-			const fd = this._inhibitorFd;
-			this._inhibitorFd = null;
+			const fd = this.#inhibitorFd;
+			this.#inhibitorFd = null;
 			fd?.close(null);
 		} catch (e) {
 			logError(/** @type {Error} */ (e), "Failed to uninhibit sleep");

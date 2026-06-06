@@ -8,7 +8,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.16",
-		"@girs/gjs": "4.0.4",
+		"@girs/gjs": "4.0.1",
 		"@girs/gnome-shell": "46.0.2",
 		"typescript": "6.0.3"
 	},

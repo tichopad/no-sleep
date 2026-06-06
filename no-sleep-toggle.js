@@ -1,11 +1,18 @@
 // @ts-check
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
+import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import * as QuickSettings from "resource:///org/gnome/shell/ui/quickSettings.js";
+import { ICONS } from "./config.js";
 import { InhibitorManager } from "./inhibitor-manager.js";
 
 /** Menu toggle button. */
 class _NoSleepToggle extends QuickSettings.QuickToggle {
+	/** @type {InstanceType<typeof InhibitorManager> | null} */
+	#inhibitorManager = null;
+	/** @type {Gio.Settings | null} */
+	#settings = null;
+
 	/** Init toggle UI. */
 	_init() {
 		super._init({
@@ -21,10 +28,10 @@ class _NoSleepToggle extends QuickSettings.QuickToggle {
 	 * @param {InstanceType<typeof InhibitorManager>} inhibitorManager
 	 */
 	setup(settings, inhibitorManager) {
-		this._settings = settings;
-		this._inhibitorManager = inhibitorManager;
+		this.#settings = settings;
+		this.#inhibitorManager = inhibitorManager;
 
-		this._settings.bind(
+		this.#settings.bind(
 			"no-sleep-enabled",
 			/** @type {Parameters<Gio.Settings['bind']>[1]} */ (
 				/** @type {unknown} */ (this)
@@ -33,27 +40,53 @@ class _NoSleepToggle extends QuickSettings.QuickToggle {
 			Gio.SettingsBindFlags.DEFAULT,
 		);
 
-		this.connect("notify::checked", () => {
-			this._sync();
-		});
+		this.#sync();
 
-		this._sync();
+		this.connect("notify::checked", () => {
+			this.#sync();
+		});
 	}
 
-	/** Update icon and state. */
-	_sync() {
+	/**
+	 * Update icon and state.
+	 */
+	#sync() {
 		if (this.checked) {
-			this.iconName = "face-raspberry-symbolic";
-			this._inhibitorManager?.inhibit();
+			this.#inhibitorManager?.inhibit();
 		} else {
-			this.iconName = "face-yawn-symbolic";
-			this._inhibitorManager?.uninhibit();
+			this.#inhibitorManager?.uninhibit();
 		}
+		this.#showNotification();
+	}
+
+	/**
+	 * Display notification based on state
+	 */
+	#showNotification() {
+		const checkedStateToNotification = new Map([
+			[true, { iconName: ICONS.on.name, text: "No Sleep enabled" }],
+			[false, { iconName: ICONS.off.name, text: "No Sleep disabled" }],
+		]);
+
+		const notification = checkedStateToNotification.get(this.checked);
+		if (notification === undefined) {
+			logError(
+				`Expected boolean state, received: ${String(typeof this.checked)}`,
+			);
+			return;
+		}
+
+		Main.osdWindowManager.show(
+			-1,
+			Gio.Icon.new_for_string(notification.iconName),
+			notification.text,
+			null,
+		);
 	}
 
 	/** Cleanup toggle. */
 	destroy() {
-		this._inhibitorManager?.uninhibit();
+		this.#inhibitorManager?.uninhibit();
 		super.destroy();
 	}
 }
