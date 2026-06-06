@@ -1,0 +1,7 @@
+- [x] No Sleep toggle appears in Quick Settings menu
+- [x] Toggle icon changes from face-yawn to face-raspberry when enabled
+- [x] Top bar icon appears when toggle is enabled
+- [x] Top bar icon disappears when toggle is disabled
+- [x] Inhibitor lock shows in `systemd-inhibit --list` when enabled
+- [x] Inhibitor lock removed when disabled
+- [x] Toggle state persists across GNOME Shell restart

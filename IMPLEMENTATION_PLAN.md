@@ -70,7 +70,7 @@ no-sleep/
 
 ---
 
-### Step 3: extension.js — Main Extension Logic
+### Step 3: extension.js — Main Extension Logic ✅
 **Purpose:** Core extension implementation with toggle UI and inhibitor management.
 
 **Structure:**
@@ -87,14 +87,14 @@ import St from 'gi://St';
 
 **Components to implement:**
 
-#### 3.1: NoSleepIndicator Class
+#### 3.1: NoSleepIndicator Class ✅
 **Purpose:** System menu button with toggle functionality.
 
 **Responsibilities:**
 - Create menu item in system menu (Quick Settings area)
 - Display icon and "No Sleep" text
 - Handle toggle state changes
-- Update icon based on state (face-raspberry-symbolic vs face-yarn-symbolic)
+- Update icon based on state (face-raspberry-symbolic vs face-yawn-symbolic)
 - Add/remove top bar icon when toggled on/off
 
 **Implementation details:**
@@ -111,11 +111,11 @@ menuIcon: face-raspberry-symbolic
 topBarIcon: face-raspberry-symbolic (visible)
 
 // When disabled:
-menuIcon: face-yarn-symbolic
+menuIcon: face-yawn-symbolic
 topBarIcon: none (hidden)
 ```
 
-#### 3.2: InhibitorManager
+#### 3.2: InhibitorManager ✅ ✅
 **Purpose:** Manage logind inhibitor lock via D-Bus.
 
 **Responsibilities:**
@@ -158,7 +158,7 @@ const inhibitor = Gio.DBus.system.call_sync(
 - Close FD when disabling
 - Handle extension disable/unload gracefully
 
-#### 3.3: Extension Class
+#### 3.3: Extension Class ✅ ✅
 **Purpose:** Main extension lifecycle management.
 
 **Responsibilities:**
