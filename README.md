@@ -13,7 +13,7 @@ glib-compile-schemas schemas/
 # Link to extensions dir
 EXT_DIR=~/.local/share/gnome-shell/extensions/i-cant-get-no-sleep@tichopad
 mkdir -p "$EXT_DIR"
-ln -s "$PWD/src/extension.js" "$EXT_DIR/"
+for f in src/*.js; do ln -s "$PWD/$f" "$EXT_DIR/"; done
 ln -s "$PWD/metadata.json" "$EXT_DIR/"
 ln -s "$PWD/schemas" "$EXT_DIR/"
 ```
