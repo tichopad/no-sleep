@@ -1,11 +1,11 @@
 import { Settings } from "gi://Gio";
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { STATE_KEY_NAME } from "../config.js";
-import NoSleepExtension from "../extension.js";
-import { InhibitorManager } from "../inhibitor-manager.js";
-import { NoSleepIndicator } from "../no-sleep-indicator.js";
-import { NoSleepToggle } from "../no-sleep-toggle.js";
+import { STATE_KEY_NAME } from "../src/config.js";
+import NoSleepExtension from "../src/extension.js";
+import { InhibitorManager } from "../src/inhibitor-manager.js";
+import { NoSleepIndicator } from "../src/no-sleep-indicator.js";
+import { NoSleepToggle } from "../src/no-sleep-toggle.js";
 
 describe("NoSleepExtension", () => {
 	afterEach(() => {

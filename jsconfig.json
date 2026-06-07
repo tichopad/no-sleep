@@ -7,5 +7,6 @@
 		"module": "nodenext",
 		"strict": true
 	},
-	"include": ["**/*.js", "gjs.d.ts"]
+	"include": ["**/*.js", "gjs.d.ts"],
+	"exclude": ["coverage/**", "tests/**", "vitest.config.js"]
 }

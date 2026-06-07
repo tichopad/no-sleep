@@ -1,6 +1,6 @@
 import Gio from "gi://Gio";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { InhibitorManager } from "../inhibitor-manager.js";
+import { InhibitorManager } from "../src/inhibitor-manager.js";
 
 describe("InhibitorManager", () => {
 	beforeEach(() => {

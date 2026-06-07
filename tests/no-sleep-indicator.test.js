@@ -1,7 +1,7 @@
 import Gio from "gi://Gio";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { ICONS } from "../config.js";
-import { NoSleepIndicator } from "../no-sleep-indicator.js";
+import { ICONS } from "../src/config.js";
+import { NoSleepIndicator } from "../src/no-sleep-indicator.js";
 
 describe("NoSleepIndicator", () => {
 	afterEach(() => {
