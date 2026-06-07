@@ -51,6 +51,7 @@ class _NoSleepToggle extends QuickSettings.QuickToggle {
 	 * Update icon and state.
 	 */
 	#sync() {
+		this.iconName = ICONS[this.checked ? "on" : "off"].name;
 		if (this.checked) {
 			this.#inhibitorManager?.inhibit();
 		} else {

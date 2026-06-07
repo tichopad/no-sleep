@@ -41,6 +41,7 @@ describe("NoSleepToggle", () => {
 		toggle.checked = true;
 		toggle.emit("notify::checked");
 
+		expect(toggle.iconName).toBe(ICONS.on.name);
 		expect(mgr.inhibit).toHaveBeenCalled();
 		expect(Main.osdWindowManager.show).toHaveBeenCalledWith(
 			-1,
@@ -60,6 +61,7 @@ describe("NoSleepToggle", () => {
 		toggle.checked = false;
 		toggle.emit("notify::checked");
 
+		expect(toggle.iconName).toBe(ICONS.off.name);
 		expect(mgr.uninhibit).toHaveBeenCalled();
 		expect(Main.osdWindowManager.show).toHaveBeenCalledWith(
 			-1,
