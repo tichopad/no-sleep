@@ -47,11 +47,15 @@ class _NoSleepToggle extends QuickSettings.QuickToggle {
 		});
 	}
 
+	#getIconForCurrentState() {
+		return ICONS[this.checked ? "on" : "off"];
+	}
+
 	/**
 	 * Update icon and state.
 	 */
 	#sync() {
-		this.iconName = ICONS[this.checked ? "on" : "off"].name;
+		this.iconName = this.#getIconForCurrentState().name;
 		if (this.checked) {
 			this.#inhibitorManager?.inhibit();
 		} else {
@@ -64,7 +68,7 @@ class _NoSleepToggle extends QuickSettings.QuickToggle {
 	 * Display notification based on state
 	 */
 	#showNotification() {
-		const iconName = ICONS[this.checked ? "on" : "off"].name;
+		const iconName = this.#getIconForCurrentState().name;
 		const text = `${EXTENSION_NAME} ${this.checked ? "enabled" : "disabled"}`;
 
 		Main.osdWindowManager.show(
